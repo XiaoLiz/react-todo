@@ -17,6 +17,8 @@ interface Todo {
     done: boolean
 }
 
+type inputEvevt = React.ChangeEvent<HTMLInputElement>
+
 const App:React.FC = function() {
 
 	let [ val, setVal ] = useState<string>('');
@@ -60,7 +62,7 @@ const App:React.FC = function() {
         setTodos(nextTodos)
     }
 
-	function handleAdd() {
+	function handleAdd(): void {
 		if(!val) {
 			alert('不能为空')
 			return
@@ -69,7 +71,7 @@ const App:React.FC = function() {
 		setVal('')
 	}
 
-	function handleSetTodo(e: React.ChangeEvent<HTMLInputElement>, index: number) {
+	function handleSetTodo(e: inputEvevt, index: number) {
 		console.log(e, 'e')
 		const updateTodos = [...todos]
 		updateTodos[index].done = e.target.checked
@@ -78,7 +80,7 @@ const App:React.FC = function() {
 
 	let active = todos.filter(item=>item.done).length
 	let [ allDone, setAllDone ] = useState(false)
-	function handleToggleTodo(e) {
+	function handleToggleTodo(e: inputEvevt) {
 		const nextTodos = [...todos];
 		nextTodos.forEach(item => item.done = e.target.checked)
 
