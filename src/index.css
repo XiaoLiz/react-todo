@@ -11,3 +11,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.link {
+	font-size: 16px;
+	padding: 10px 5px;
+}
+.course-container {
+	padding: 20px;
+}
