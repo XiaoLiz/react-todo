@@ -9,12 +9,18 @@ import React, { useState, useEffect } from 'react'
 // 	return <div>
 // 		<h1 onClick={() => setText('hello react')}>{ text }</h1>
 // 		<h1 onClick={ handleUpText }>{ text }</h1>
-// 	</div> 
+// 	</div>
 // }
 
-const App = function() {
-	let [ val, setVal ] = useState('');
-	let [ todos, setTodos ] = useState([
+interface Todo {
+    title: string,
+    done: boolean
+}
+
+const App:React.FC = function() {
+
+	let [ val, setVal ] = useState<string>('');
+	let [ todos, setTodos ] = useState<Todo[]>([
 		{
 			title: '吃饭',
 			done: false
@@ -26,7 +32,12 @@ const App = function() {
 		{
 			title: '学习',
 			done: false
+		},
+		{
+			title: '理财',
+			done: false
 		}
+
 	])
 
 	const listItems = todos.map((item, index) =>
@@ -37,13 +48,22 @@ const App = function() {
 				onChange={e=>{handleSetTodo(e, index)}}
 			/>
 			<span>{item.title}</span>
+            <span onClick={() => { handleTodoItemDelete(index) }}>❌</span>
 		</li>
 	)
+
+    function handleTodoItemDelete(index: number) {
+        let nextTodos = [...todos]
+        nextTodos.splice(index, 1);
+        console.log(nextTodos, 'nextTodos')
+
+        setTodos(nextTodos)
+    }
 
 	function handleAdd() {
 		if(!val) {
 			alert('不能为空')
-			return 
+			return
 		}
 		setTodos([...todos, { title: val, done: false }])
 		setVal('')
@@ -58,7 +78,7 @@ const App = function() {
 
 	let active = todos.filter(item=>item.done).length
 	let [ allDone, setAllDone ] = useState(false)
-	function handleToggleTodo(e: React.ChangeEvent<HTMLInputElement>) {
+	function handleToggleTodo(e) {
 		const nextTodos = [...todos];
 		nextTodos.forEach(item => item.done = e.target.checked)
 
@@ -67,13 +87,20 @@ const App = function() {
 	}
 
 	useEffect(() => {
-		setAllDone(active===todos.length)
+		setAllDone(active === todos.length)
 	}, [todos])
+
+
+    function handleClear() {
+        setTodos(todos.filter(item => !item.done))
+    }
 
 	return <div>
 		<input type="text" value={val} onChange={(e) => setVal(e.target.value)} />
 		<button onClick={ handleAdd }>添加</button>
-		<ul> { listItems } </ul>
+		<button onClick={ handleClear }>清空</button>
+
+		{ todos.length ? <ul> { listItems } </ul> : <div>暂无数据</div> }
 
 		<div>
 			全选 <input type="checkbox" checked={allDone} onChange={e=>{handleToggleTodo(e)}}  />
