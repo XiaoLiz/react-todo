@@ -1,4 +1,10 @@
 module.exports = {
+    "settings": {
+        "react": {
+          "pragma": "React",  // Pragma to use, default to "React"
+          "version": "detect", // React version. "detect" automatically picks the version you have installed.
+        }
+    },
     "env": {
         "browser": true,
         "es2021": true

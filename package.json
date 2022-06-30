@@ -9,6 +9,7 @@
     "lint": "eslint --fix src/"
   },
   "dependencies": {
+    "antd": "^4.21.4",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.3.0"
@@ -23,6 +24,7 @@
     "eslint-plugin-react": "^7.30.1",
     "husky": "^8.0.1",
     "typescript": "^4.6.3",
-    "vite": "^2.9.9"
+    "vite": "^2.9.9",
+    "vite-plugin-imp": "^2.2.0"
   }
 }
