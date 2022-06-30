@@ -1,17 +1,5 @@
 import React, { useState, useEffect } from 'react'
 
-
-// const App = function() {
-// 	let [ text, setText ] = useState('hello world');
-// 	function handleUpText() {
-// 		setText('hello react')
-// 	}
-// 	return <div>
-// 		<h1 onClick={() => setText('hello react')}>{ text }</h1>
-// 		<h1 onClick={ handleUpText }>{ text }</h1>
-// 	</div>
-// }
-
 interface Todo {
     title: string,
     done: boolean
@@ -20,9 +8,8 @@ interface Todo {
 type inputEvevt = React.ChangeEvent<HTMLInputElement>
 
 const App:React.FC = function() {
-
-	let [ val, setVal ] = useState<string>('');
-	let [ todos, setTodos ] = useState<Todo[]>([
+	const [ val, setVal ] = useState<string>('');
+	const [ todos, setTodos ] = useState<Todo[]>([
 		{
 			title: '吃饭',
 			done: false
@@ -55,7 +42,7 @@ const App:React.FC = function() {
 	)
 
     function handleTodoItemDelete(index: number) {
-        let nextTodos = [...todos]
+        const nextTodos = [...todos]
         nextTodos.splice(index, 1);
         console.log(nextTodos, 'nextTodos')
 
@@ -78,8 +65,8 @@ const App:React.FC = function() {
 		setTodos(updateTodos)
 	}
 
-	let active = todos.filter(item=>item.done).length
-	let [ allDone, setAllDone ] = useState(false)
+	const active = todos.filter(item=>item.done).length
+	const [ allDone, setAllDone ] = useState(false)
 	function handleToggleTodo(e: inputEvevt) {
 		const nextTodos = [...todos];
 		nextTodos.forEach(item => item.done = e.target.checked)
