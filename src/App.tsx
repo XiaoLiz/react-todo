@@ -1,101 +1,19 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 
-interface Todo {
-    title: string,
-    done: boolean
+import Home from './pages/Home'
+import About from './pages/About'
+
+const App = () => {
+	return <BrowserRouter>
+        <Link to="/">Home</Link>
+        <Link to="/about">About</Link>
+
+        <Routes>
+            <Route path="/" element={<Home />}></Route>
+            <Route path="/about" element={<About />}></Route>
+        </Routes>
+    </BrowserRouter>
 }
 
-type inputEvevt = React.ChangeEvent<HTMLInputElement>
-
-const App:React.FC = function() {
-	const [ val, setVal ] = useState<string>('');
-	const [ todos, setTodos ] = useState<Todo[]>([
-		{
-			title: '吃饭',
-			done: false
-		},
-		{
-			title: '睡觉',
-			done: false
-		},
-		{
-			title: '学习',
-			done: false
-		},
-		{
-			title: '理财',
-			done: false
-		}
-
-	])
-
-	const listItems = todos.map((item, index) =>
-		<li key={index.toString()}>
-			<input
-				type="checkbox"
-				checked={item.done}
-				onChange={e=>{handleSetTodo(e, index)}}
-			/>
-			<span>{item.title}</span>
-            <span onClick={() => { handleTodoItemDelete(index) }}>❌</span>
-		</li>
-	)
-
-    function handleTodoItemDelete(index: number) {
-        const nextTodos = [...todos]
-        nextTodos.splice(index, 1);
-        console.log(nextTodos, 'nextTodos')
-
-        setTodos(nextTodos)
-    }
-
-	function handleAdd(): void {
-		if(!val) {
-			alert('不能为空')
-			return
-		}
-		setTodos([...todos, { title: val, done: false }])
-		setVal('')
-	}
-
-	function handleSetTodo(e: inputEvevt, index: number) {
-		console.log(e, 'e')
-		const updateTodos = [...todos]
-		updateTodos[index].done = e.target.checked
-		setTodos(updateTodos)
-	}
-
-	const active = todos.filter(item=>item.done).length
-	const [ allDone, setAllDone ] = useState(false)
-	function handleToggleTodo(e: inputEvevt) {
-		const nextTodos = [...todos];
-		nextTodos.forEach(item => item.done = e.target.checked)
-
-		setTodos(nextTodos)
-		setAllDone(e.target.checked)
-	}
-
-	useEffect(() => {
-		setAllDone(active === todos.length)
-	}, [todos])
-
-
-    function handleClear() {
-        setTodos(todos.filter(item => !item.done))
-    }
-
-	return <div>
-		<input type="text" value={val} onChange={(e) => setVal(e.target.value)} />
-		<button onClick={ handleAdd }>添加</button>
-		<button onClick={ handleClear }>清空</button>
-
-		{ todos.length ? <ul> { listItems } </ul> : <div>暂无数据</div> }
-
-		<div>
-			全选 <input type="checkbox" checked={allDone} onChange={e=>{handleToggleTodo(e)}}  />
-			<span>{ active }/{todos.length}</span>
-		</div>
-	</div>
-}
-
-export default App;
+export default App
