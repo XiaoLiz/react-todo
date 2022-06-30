@@ -4,7 +4,7 @@ import courses from "./feCourse";
 
 const Course:React.FC = () => {
 	let { id } = useParams()
-	let course = courses.find(item => item.id == id)
+	let course = (courses as Array<any>).find(item => item.id === Number(id))
 
 	return <div className="course-container">
 		课程详情
